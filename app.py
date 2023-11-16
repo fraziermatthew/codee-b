@@ -4,7 +4,7 @@ import pytz
 import sqlite3
 from uuid import uuid4
 
-import openai
+from openai import OpenAI
 import streamlit as st
 from modal import Modal
 
@@ -33,7 +33,7 @@ with st.expander("ℹ️ Disclaimer"):
 with st.sidebar:
     openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
 
-openai.api_key = openai_api_key
+client = OpenAI(openai_api_key=openai_api_key)
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-4"
@@ -67,7 +67,7 @@ if prompt := st.chat_input("Let's chat."):
     with st.chat_message("assistant", avatar=csp_logo):
         message_placeholder = st.empty()
         full_response = ""
-        for response in openai.ChatCompletion.create(
+        for response in client.chat.completions.create(
             model=st.session_state["openai_model"],
             messages=[
                 {"role": m["role"], "content": m["content"]}
@@ -79,7 +79,7 @@ if prompt := st.chat_input("Let's chat."):
             message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
     
-    # Create modal
+        # Create modal
         modal = Modal(title="", key="modal")
         
         with modal.container():
