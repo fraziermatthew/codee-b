@@ -55,7 +55,7 @@ for message in st.session_state.messages:
             st.markdown(message["content"])
 
 
-if prompt := st.chat_input("Let's chat."):
+if prompt := st.chat_input("Let's chat"):
     if not openai_api_key:
         st.info("Please add your OpenAI API key to continue.")
         st.stop()
