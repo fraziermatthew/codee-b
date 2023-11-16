@@ -66,16 +66,16 @@ if prompt := st.chat_input("Let's chat"):
 
     with st.chat_message("assistant", avatar=csp_logo):
         message_placeholder = st.empty()
+        result = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
+        response = result.choices[0].message.content
         full_response = ""
-        for response in client.chat.completions.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        ):
-            full_response += response.choices[0].delta.get("content", "")
+        
+        # Simulate stream of response with milliseconds delay
+        for chunk in response.split():
+            full_response += chunk + " "
+            time.sleep(0.05)
+            
+            # Add a blinking cursor to simulate typing
             message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
     
