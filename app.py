@@ -33,7 +33,7 @@ with st.expander("ℹ️ Disclaimer"):
 with st.sidebar:
     openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
 
-client = OpenAI(openai_api_key=openai_api_key)
+client = OpenAI(api_key=openai_api_key)
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-4"
