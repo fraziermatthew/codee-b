@@ -33,6 +33,17 @@ with st.expander("ℹ️ Disclaimer"):
     
 with st.sidebar:
     openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+    admin = st.text_input("Admin Only", key="db_key", type="password")
+    
+    if admin == "matthew":
+        # Button to download db file
+        with open("results.db", "rb") as fp:
+            btn = st.download_button(
+                label="Download db file",
+                data=fp,
+                file_name="results.db",
+                mime="application/octet-stream"
+            )
 
 client = OpenAI(api_key=openai_api_key)
 
