@@ -3,18 +3,16 @@ import time
 
 import pytz
 import sqlite3
-from uuid import uuid4
 
 from openai import OpenAI
 import streamlit as st
 from modal import Modal
 
-# Create a user_id for the session
-user_id = uuid4()
-
 # Custom image for the app icon and the assistant's avatar
 csp_logo = 'https://apcentral.collegeboard.org/media/images/desktop/ap-computer-science-principles-192.png'
 college_board_logo = "https://wthsscratchpaper.net/wp-content/uploads/2023/03/College-Board-Logo-Icon.jpg"
+codee_avatar = 'https://miro.medium.com/v2/resize:fit:525/1*lyyXmbeoK5JiIBNCnzzjjg.png'
+codee_avatar2 = 'https://images-platform.99static.com/EQHRK-j49KSCLj-fiK-trxxBR8Q=/1043x113:2040x1110/500x500/top/smart/99designs-contests-attachments/96/96241/attachment_96241792'
 
 # Configure streamlit page
 st.set_page_config(
@@ -22,17 +20,19 @@ st.set_page_config(
 )
 
 # Adding user_id to title
-st.subheader(f"{user_id}")
+# st.subheader(f"{user_id}")
 
 with st.expander("ℹ️ Disclaimer"):
     st.caption(
-        f"""We appreciate your engagement! Please note, this is research purposes only. Thank you for your understanding.
-        Your user-id is {user_id}. Be sure to add this to the survey.
+        f"""We appreciate your engagement! Please note, this is research purposes only. 
+        Thank you for your understanding. Be sure to add this to the survey.
         """
     )
     
 with st.sidebar:
     openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
+    # Create a user_id for the session
+    user_id = st.text_input("Participant #", key="user_id", type="password")
     admin = st.text_input("Admin Only", key="db_key", type="password")
     
     if admin == "matthew":
@@ -54,13 +54,13 @@ if "openai_model" not in st.session_state:
 if "messages" not in st.session_state:
     # Start with first message from assistant
     st.session_state['messages'] = [{"role": "assistant", 
-                                  "content": f"Hi student! I'm an intelligent AI for Computer Science Principles. How can I help you today?"}]
+                                  "content": f"Hi student! I'm Codee, an intelligent AI for Computer Science Principles. How can I help you today?"}]
 
 # Display chat messages from history on app rerun
 # Custom avatar for the assistant, default avatar for user
 for message in st.session_state.messages:
     if message["role"] == 'assistant':
-        with st.chat_message(message["role"], avatar=csp_logo):
+        with st.chat_message(message["role"], avatar=codee_avatar):
             st.markdown(message["content"])
     else:
         with st.chat_message(message["role"]):
@@ -70,6 +70,10 @@ for message in st.session_state.messages:
 if prompt := st.chat_input("Let's chat"):
     if not openai_api_key:
         st.info("Please add your OpenAI API key to continue.")
+        st.stop()
+        
+    if not user_id:
+        st.info("Please add your Participant # to continue.")
         st.stop()
 
     st.session_state.messages.append({"role": "user", "content": prompt})
