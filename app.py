@@ -45,7 +45,7 @@ with st.sidebar:
                 mime="application/octet-stream"
             )
 
-client = OpenAI(api_key=openai_api_key)
+client = OpenAI(api_key=openai_api_key, temperature=0.3)
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-4"
