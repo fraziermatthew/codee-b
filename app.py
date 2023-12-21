@@ -80,7 +80,7 @@ if prompt := st.chat_input("Let's chat"):
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    with st.chat_message("assistant", avatar=csp_logo):
+    with st.chat_message("assistant", avatar=codee_avatar):
         message_placeholder = st.empty()
         result = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
         response = result.choices[0].message.content
