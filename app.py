@@ -45,7 +45,7 @@ with st.sidebar:
                 mime="application/octet-stream"
             )
 
-client = OpenAI(api_key=openai_api_key, temperature=0.3)
+client = OpenAI(api_key=openai_api_key)
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-4"
@@ -82,7 +82,7 @@ if prompt := st.chat_input("Let's chat"):
 
     with st.chat_message("assistant", avatar=codee_avatar):
         message_placeholder = st.empty()
-        result = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
+        result = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages, temperature=0.3)
         response = result.choices[0].message.content
         full_response = ""
         
