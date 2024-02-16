@@ -77,9 +77,9 @@ if prompt := st.chat_input("Let's chat"):
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    with st.chat_message("assistant", avatar=csp_logo):
+    with st.chat_message("assistant", avatar=codee_avatar):
         message_placeholder = st.empty()
-        result = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
+        result = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages, temperature=0.3)
         response = result.choices[0].message.content
         full_response = ""
         
@@ -109,25 +109,25 @@ if prompt := st.chat_input("Let's chat"):
                     st.session_state.disabled = False
         
                 q1 = st.radio(
-                    label="Rate how accurately the chatbot answered your question.",
+                    label="How well do you believe that the chatbot answered your question?",
                     options=["Very Poor", "Poor", "Acceptable", "Good", "Very Good"],
                     index=2,
                     horizontal=True
                 )
                 q2 = st.radio(
-                    label="Rate the level that the agent’s response enabled you to learn based on your personal experience.",
+                    label="How well did the agent’s response take into account your personal background and experience?",
                     options=["Very Poor", "Poor", "Acceptable", "Good", "Very Good"],
                     index=2,
                     horizontal=True
                 )
                 q3 = st.radio(
-                    label="Rate your level of understanding of the agent’s response.",
+                    label="How understandable do you believe the agent's response was to you?",
                     options=["Very Poor", "Poor", "Acceptable", "Good", "Very Good"],
                     index=2,
                     horizontal=True
                 )
                 q4 = st.radio(
-                    label="If there are examples present, rate your level of understanding of the examples.",
+                    label="If there are examples shown to you, how  understandable do you believe the examples were to you?",
                     options=["Very Poor", "Poor", "Acceptable", "Good", "Very Good", "N/A - Not Applicable"],
                     index=2,
                     horizontal=True

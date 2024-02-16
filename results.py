@@ -4,7 +4,7 @@ cur = con.cursor()
 
 cur.execute("""
     CREATE TABLE results (
-        user_id TEXT NOT NULL UNIQUE PRIMARY KEY,
+        user_id TEXT NOT NULL,
         user_input TEXT NOT NULL,
         model_output TEXT NOT NULL,
         q1 TEXT NOT NULL,
