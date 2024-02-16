@@ -19,9 +19,6 @@ st.set_page_config(
     page_icon=college_board_logo
 )
 
-# Adding user_id to title
-# st.subheader(f"{user_id}")
-
 with st.expander("ℹ️ Disclaimer"):
     st.caption(
         f"""We appreciate your engagement! Please note, this is research purposes only. 
