@@ -23,9 +23,6 @@ To run this locally, follow the below build instructions.
 
 1. Get an OPENAI API free API Key
 2.  Clone the repository
-```sh
-git clone https://github.com/fraziermatthew/chatcsp.git
-```
 3. Install dependencies
 ```sh
 pip install -r requirements.txt
